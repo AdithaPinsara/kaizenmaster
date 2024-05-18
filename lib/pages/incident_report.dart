@@ -71,17 +71,18 @@ class _IncidentReportPageState extends State<IncidentReportPage> {
     clear();
   }
 
-  @override
-  void initState() async {
-    if (widget.viewMode != null && widget.viewMode!) {
-      final commentDocs = await FirebaseFirestore.instance
-          .collection('incidents')
-          .doc(widget.id!)
-          .get();
-    }
-    // TODO: implement initState
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   if (widget.viewMode != null && widget.viewMode!) {
+  //     final commentDocs = FirebaseFirestore.instance
+  //         .collection('incidents')
+  //         .doc(widget.id!)
+  //         .get();
+  //         titleController.text = commentDocs.
+  //   }
+  //   // TODO: implement initState
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -98,145 +99,308 @@ class _IncidentReportPageState extends State<IncidentReportPage> {
           color: Colors.white,
         ),
       ),
-      body: Stack(
-        children: [
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    CommonTextField(
-                      controller: titleController,
-                      hintText: "Title",
-                      obscureText: false,
-                      readOnly: false,
-                    ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    CommonTextField(
-                      controller: descriptionController,
-                      hintText: "Description",
-                      obscureText: false,
-                      readOnly: false,
-                    ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    CommonDropDown(
-                      hintText: "Select a category",
-                      dropdownMenuItems: categorylist,
-                      value: category,
-                      onChanged: onChangecat,
-                    ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    CommonDropDown(
-                      hintText: "Select a sub category",
-                      dropdownMenuItems: categorylist,
-                      value: subCategory,
-                      onChanged: onChangesubcat,
-                    ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    CommonDropDown(
-                      hintText: "Location",
-                      dropdownMenuItems: categorylist,
-                      value: location,
-                      onChanged: onChangeloc,
-                    ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    Visibility(
-                      visible: false,
-                      child: CommonTextField(
-                        controller: titleController,
-                        hintText: "Date & Time",
-                        obscureText: false,
-                        readOnly: true,
+      body: widget.viewMode != null && widget.viewMode!
+          ? StreamBuilder<DocumentSnapshot>(
+              stream: FirebaseFirestore.instance
+                  .collection('incidents')
+                  .doc(widget.id!)
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  final userData =
+                      snapshot.data!.data() as Map<String, dynamic>;
+                  titleController.text = userData["Title"];
+                  descriptionController.text = userData["Description"];
+                  category = userData["Category"];
+                  subCategory = userData["SubCategory"];
+                  location = userData["Location"];
+                  return Stack(
+                    children: [
+                      Positioned(
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                CommonTextField(
+                                  controller: titleController,
+                                  hintText: "Title",
+                                  obscureText: false,
+                                  readOnly: false,
+                                ),
+                                const SizedBox(
+                                  height: 12,
+                                ),
+                                CommonTextField(
+                                  controller: descriptionController,
+                                  hintText: "Description",
+                                  obscureText: false,
+                                  readOnly: false,
+                                ),
+                                const SizedBox(
+                                  height: 12,
+                                ),
+                                CommonDropDown(
+                                  hintText: "Select a category",
+                                  dropdownMenuItems: categorylist,
+                                  value: category,
+                                  onChanged: onChangecat,
+                                ),
+                                const SizedBox(
+                                  height: 12,
+                                ),
+                                CommonDropDown(
+                                  hintText: "Select a sub category",
+                                  dropdownMenuItems: categorylist,
+                                  value: subCategory,
+                                  onChanged: onChangesubcat,
+                                ),
+                                const SizedBox(
+                                  height: 12,
+                                ),
+                                CommonDropDown(
+                                  hintText: "Location",
+                                  dropdownMenuItems: categorylist,
+                                  value: location,
+                                  onChanged: onChangeloc,
+                                ),
+                                const SizedBox(
+                                  height: 12,
+                                ),
+                                Visibility(
+                                  visible: false,
+                                  child: CommonTextField(
+                                    controller: titleController,
+                                    hintText: "Date & Time",
+                                    obscureText: false,
+                                    readOnly: true,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 12,
+                                ),
+                                const EvidenceSelector(),
+                                const SizedBox(
+                                  height: 12,
+                                ),
+                                Visibility(
+                                  visible: false,
+                                  child: CommonDropDown(
+                                    hintText: "Status",
+                                    dropdownMenuItems: categorylist,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 12,
+                                ),
+                                Visibility(
+                                  visible: false,
+                                  child: CommonDropDown(
+                                    hintText: "Asigned to",
+                                    dropdownMenuItems: categorylist,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 12,
+                                ),
+                                Visibility(
+                                  visible: false,
+                                  child: CommonTextField(
+                                    controller: titleController,
+                                    hintText: "Reported by",
+                                    obscureText: false,
+                                    readOnly: true,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 100,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        child: Container(
+                          color: Colors.grey[300],
+                          padding: const EdgeInsets.all(12.0),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: CommonButton(
+                                  name: "Clear",
+                                  ontap: clear,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 12,
+                              ),
+                              Expanded(
+                                child: CommonButton(
+                                  name: "Save",
+                                  ontap: postMessage,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                } else if (snapshot.hasError) {
+                  return Center(
+                    child: Text('Error${snapshot.error}'),
+                  );
+                } else {
+                  return Center(child: CircularProgressIndicator());
+                }
+              },
+            )
+          : Stack(
+              children: [
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          CommonTextField(
+                            controller: titleController,
+                            hintText: "Title",
+                            obscureText: false,
+                            readOnly: false,
+                          ),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                          CommonTextField(
+                            controller: descriptionController,
+                            hintText: "Description",
+                            obscureText: false,
+                            readOnly: false,
+                          ),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                          CommonDropDown(
+                            hintText: "Select a category",
+                            dropdownMenuItems: categorylist,
+                            value: category,
+                            onChanged: onChangecat,
+                          ),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                          CommonDropDown(
+                            hintText: "Select a sub category",
+                            dropdownMenuItems: categorylist,
+                            value: subCategory,
+                            onChanged: onChangesubcat,
+                          ),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                          CommonDropDown(
+                            hintText: "Location",
+                            dropdownMenuItems: categorylist,
+                            value: location,
+                            onChanged: onChangeloc,
+                          ),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                          Visibility(
+                            visible: false,
+                            child: CommonTextField(
+                              controller: titleController,
+                              hintText: "Date & Time",
+                              obscureText: false,
+                              readOnly: true,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                          const EvidenceSelector(),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                          Visibility(
+                            visible: false,
+                            child: CommonDropDown(
+                              hintText: "Status",
+                              dropdownMenuItems: categorylist,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                          Visibility(
+                            visible: false,
+                            child: CommonDropDown(
+                              hintText: "Asigned to",
+                              dropdownMenuItems: categorylist,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                          Visibility(
+                            visible: false,
+                            child: CommonTextField(
+                              controller: titleController,
+                              hintText: "Reported by",
+                              obscureText: false,
+                              readOnly: true,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 100,
+                          ),
+                        ],
                       ),
                     ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    const EvidenceSelector(),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    Visibility(
-                      visible: false,
-                      child: CommonDropDown(
-                        hintText: "Status",
-                        dropdownMenuItems: categorylist,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    Visibility(
-                      visible: false,
-                      child: CommonDropDown(
-                        hintText: "Asigned to",
-                        dropdownMenuItems: categorylist,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    Visibility(
-                      visible: false,
-                      child: CommonTextField(
-                        controller: titleController,
-                        hintText: "Reported by",
-                        obscureText: false,
-                        readOnly: true,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 100,
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-              color: Colors.grey[300],
-              padding: const EdgeInsets.all(12.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: CommonButton(
-                      name: "Clear",
-                      ontap: clear,
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: Container(
+                    color: Colors.grey[300],
+                    padding: const EdgeInsets.all(12.0),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: CommonButton(
+                            name: "Clear",
+                            ontap: clear,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 12,
+                        ),
+                        Expanded(
+                          child: CommonButton(
+                            name: "Save",
+                            ontap: postMessage,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  SizedBox(
-                    width: 12,
-                  ),
-                  Expanded(
-                    child: CommonButton(
-                      name: "Save",
-                      ontap: postMessage,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ),
-        ],
-      ),
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:kaizenmaster/common/helpers/helper_methods.dart';
 import 'package:kaizenmaster/common/widgets/incident_tile.dart';
+import 'package:kaizenmaster/pages/incident_report.dart';
 
 class IncidentListScreen extends StatefulWidget {
   const IncidentListScreen({super.key});
@@ -42,7 +43,15 @@ class _IncidentListScreenState extends State<IncidentListScreen> {
                           itemBuilder: (context, index) {
                             final post = snapshot.data!.docs[index];
                             return GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return IncidentReportPage(
+                                    id: post.id,
+                                    viewMode: true,
+                                  );
+                                }));
+                              },
                               child: CommonTile(
                                 title: post["Title"],
                                 datetime: formatdate(post["TimeStamp"]),

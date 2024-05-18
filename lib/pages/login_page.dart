@@ -54,82 +54,87 @@ class _LoginPageState extends State<LoginPage> {
         child: Center(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: 50,
-                ),
-                //logo
-                Icon(
-                  Icons.lock,
-                  size: 100,
-                ),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 50,
+                  ),
+                  //logo
+                  Icon(
+                    Icons.analytics_rounded,
+                    size: 100,
+                  ),
 
-                SizedBox(
-                  height: 50,
-                ),
+                  SizedBox(
+                    height: 50,
+                  ),
 
-                //welcom back message
-                Text("Welcome to Action Wall"),
+                  //welcom back message
+                  Text(
+                    "Welcome to Kaizen Master",
+                    style: TextStyle(fontSize: 20),
+                  ),
 
-                SizedBox(
-                  height: 50,
-                ),
+                  SizedBox(
+                    height: 50,
+                  ),
 
-                //email textField
-                CommonTextField(
-                  controller: emailController,
-                  hintText: "Email",
-                  obscureText: false,
-                  readOnly: false,
-                ),
+                  //email textField
+                  CommonTextField(
+                    controller: emailController,
+                    hintText: "Email",
+                    obscureText: false,
+                    readOnly: false,
+                  ),
 
-                SizedBox(
-                  height: 10,
-                ),
+                  SizedBox(
+                    height: 10,
+                  ),
 
-                //password textField
-                CommonTextField(
-                  controller: passwordController,
-                  hintText: "Password",
-                  obscureText: true,
-                  readOnly: false,
-                ),
+                  //password textField
+                  CommonTextField(
+                    controller: passwordController,
+                    hintText: "Password",
+                    obscureText: true,
+                    readOnly: false,
+                  ),
 
-                SizedBox(
-                  height: 20,
-                ),
+                  SizedBox(
+                    height: 20,
+                  ),
 
-                //sign in button
-                CommonButton(
-                  ontap: signIn,
-                  name: "Sign In",
-                ),
+                  //sign in button
+                  CommonButton(
+                    ontap: signIn,
+                    name: "Sign In",
+                  ),
 
-                SizedBox(
-                  height: 20,
-                ),
+                  SizedBox(
+                    height: 20,
+                  ),
 
-                //go to register page
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("Not a member?"),
-                    SizedBox(
-                      width: 4,
-                    ),
-                    GestureDetector(
-                      onTap: widget.onTap,
-                      child: Text(
-                        "Register now",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, color: Colors.blue),
+                  //go to register page
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("Not a member?"),
+                      SizedBox(
+                        width: 4,
                       ),
-                    )
-                  ],
-                )
-              ],
+                      GestureDetector(
+                        onTap: widget.onTap,
+                        child: Text(
+                          "Register now",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.blue),
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         ),

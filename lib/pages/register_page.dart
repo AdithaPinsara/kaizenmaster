@@ -77,19 +77,27 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   //logo
                   Icon(
-                    Icons.lock,
+                    Icons.analytics_rounded,
                     size: 100,
                   ),
 
                   SizedBox(
-                    height: 50,
+                    height: 30,
+                  ),
+                  Text(
+                    "Welcome to Kaizen Master",
+                    style: TextStyle(fontSize: 20),
+                  ),
+
+                  SizedBox(
+                    height: 40,
                   ),
 
                   //welcom back message
                   Text("Create a new account"),
 
                   SizedBox(
-                    height: 50,
+                    height: 20,
                   ),
 
                   //email textField
