@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "185081549927",
+    "project_id": "kaizenmaster-cd192",
+    "storage_bucket": "kaizenmaster-cd192.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:185081549927:android:2e79632ec6e083e9a770c2",
+        "android_client_info": {
+          "package_name": "com.example.kaizenmaster"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhHIzg33LP5XSDCrGC_8pxzHsDWBLHe4I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
